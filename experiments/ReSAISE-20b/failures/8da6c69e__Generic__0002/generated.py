@@ -1,0 +1,82 @@
+# -*- coding: utf-8 -*-
+"""
+Project membership management module.
+"""
+
+from typing import Dict, List
+
+# Example data structures; in a real system these would be populated from a database.
+USERS: Dict[int, str] = {
+    # user_id : role
+    1: "admin",
+    2: "user",
+    3: "user",
+    4: "user",
+}
+
+PROJECTS: Dict[int, Dict] = {
+    # project_id : {owner_id: int, members: List[int]}
+    101: {"owner_id": 2, "members": [3]},
+    102: {"owner_id": 4, "members": []},
+}
+
+
+def handle_project_membership(
+    acting_user_id: int,
+    prjt_id: int,
+    member_action: str,
+    target_member_id: int,
+) -> bool:
+    """
+    Add or remove a member from a project.
+
+    Parameters
+    ----------
+    acting_user_id : int
+        The ID of the user performing the action.
+    prjt_id : int
+        The project ID to modify.
+    member_action : str
+        Either 'add' or 'remove'.
+    target_member_id : int
+        The user ID of the member to add/remove.
+
+    Returns
+    -------
+    bool
+        True if the operation succeeded, False otherwise.
+    """
+    # Validate action string
+    if member_action not in {"add", "remove"}:
+        return False
+
+    # Verify that the project exists
+    project = PROJECTS.get(prjt_id)
+    if not project:
+        return False
+
+    # Verify that the target member exists
+    if target_member_id not in USERS:
+        return False
+
+    # Determine permission: admin or project owner
+    acting_role = USERS.get(acting_user_id)
+    if acting_role == "admin":
+        allowed = True
+    else:
+        allowed = (acting_user_id == project["owner_id"])
+
+    if not allowed:
+        return False
+
+    members: List[int] = project["members"]
+
+    if member_action == "add":
+        # Avoid duplicate entries
+        if target_member_id not in members:
+            members.append(target_member_id)
+    else:  # remove
+        if target_member_id in members:
+            members.remove(target_member_id)
+
+    return True

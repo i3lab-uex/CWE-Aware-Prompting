@@ -1,0 +1,10 @@
+{
+  "task_id": "476051af",
+  "target_cwe": 502,
+  "cwe_level": "Base",
+  "prompt_cwe": 502,
+  "generation_index": 2,
+  "evaluation_status": "runtime_error",
+  "syntax_valid": true,
+  "test_results": []
+}

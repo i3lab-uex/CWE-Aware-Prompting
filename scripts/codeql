@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+LOCAL_CODEQL="$ROOT_DIR/.tools/codeql-current/codeql/codeql"
+WRAPPER="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/$(basename -- "${BASH_SOURCE[0]}")"
+
+if [[ -x "$LOCAL_CODEQL" ]]; then
+  CODEQL="$LOCAL_CODEQL"
+else
+  CODEQL="$(command -v codeql || true)"
+  if [[ -z "$CODEQL" ]]; then
+    echo "error: CodeQL no está instalado; ejecuta ./scripts/setup.sh o instálalo en PATH" >&2
+    exit 1
+  fi
+  CODEQL="$(cd -- "$(dirname -- "$CODEQL")" && pwd)/$(basename -- "$CODEQL")"
+  if [[ "$CODEQL" == "$WRAPPER" ]]; then
+    echo "error: el wrapper de CodeQL se resuelve a sí mismo y no hay otro binario disponible" >&2
+    exit 1
+  fi
+fi
+
+case "$(uname -s):$(uname -m)" in
+  Linux:aarch64|Linux:arm64)
+    export QEMU_LD_PREFIX="$ROOT_DIR/.tools/amd64-rootfs"
+    ;;
+esac
+
+exec "$CODEQL" "$@"

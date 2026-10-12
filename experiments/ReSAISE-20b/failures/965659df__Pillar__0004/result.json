@@ -1,0 +1,10 @@
+{
+  "task_id": "965659df",
+  "target_cwe": 94,
+  "cwe_level": "Pillar",
+  "prompt_cwe": 707,
+  "generation_index": 4,
+  "evaluation_status": "syntax_error",
+  "syntax_valid": false,
+  "test_results": []
+}

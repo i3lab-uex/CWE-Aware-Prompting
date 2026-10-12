@@ -1,0 +1,10 @@
+{
+  "task_id": "c6e9e41c",
+  "target_cwe": 347,
+  "cwe_level": "Generic",
+  "prompt_cwe": null,
+  "generation_index": 1,
+  "generation_status": "error",
+  "generation_error": "InternalServerError: <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Internal Server Error</pre>\n</body>\n</html>",
+  "generation_attempts": 3
+}

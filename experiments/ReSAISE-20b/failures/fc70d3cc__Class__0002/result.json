@@ -1,0 +1,10 @@
+{
+  "task_id": "fc70d3cc",
+  "target_cwe": 94,
+  "cwe_level": "Class",
+  "prompt_cwe": 74,
+  "generation_index": 2,
+  "evaluation_status": "runtime_error",
+  "syntax_valid": true,
+  "test_results": []
+}

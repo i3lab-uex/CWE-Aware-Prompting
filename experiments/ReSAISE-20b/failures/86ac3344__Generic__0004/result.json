@@ -1,0 +1,10 @@
+{
+  "task_id": "86ac3344",
+  "target_cwe": 94,
+  "cwe_level": "Generic",
+  "prompt_cwe": null,
+  "generation_index": 4,
+  "evaluation_status": "runtime_error",
+  "syntax_valid": true,
+  "test_results": []
+}

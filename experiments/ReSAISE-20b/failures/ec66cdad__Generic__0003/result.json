@@ -1,0 +1,10 @@
+{
+  "task_id": "ec66cdad",
+  "target_cwe": 502,
+  "cwe_level": "Generic",
+  "prompt_cwe": null,
+  "generation_index": 3,
+  "evaluation_status": "import_error",
+  "syntax_valid": true,
+  "test_results": []
+}
