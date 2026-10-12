@@ -1,0 +1,53 @@
+import html
+
+# Example template – replace with the actual USER_POST_FORMAT in your project.
+USER_POST_FORMAT = """
+<div class="post">
+  <h2>{post_heading}</h2>
+  <p class="author">Author: {author_id}</p>
+  <div class="content">{content}</div>
+  <div class="tags">{labels}</div>
+</div>
+"""
+
+def render_blog_post(author_id: str,
+                     post_heading: str,
+                     content: str,
+                     labels: list[str]) -> str:
+    """
+    Render a secure HTML representation of a forum post.
+
+    Parameters
+    ----------
+    author_id : str
+        Identifier of the post's creator.
+    post_heading : str
+        Heading/title of the user's post.
+    content : str
+        Main body/content of the post.
+    labels : list[str]
+        List of tags/labels associated with the post.
+
+    Returns
+    -------
+    str
+        XSS‑protected HTML string for the forum post.
+    """
+    # Escape all user supplied data to prevent XSS
+    safe_author_id = html.escape(author_id, quote=True)
+    safe_heading   = html.escape(post_heading, quote=True)
+    safe_content   = html.escape(content)
+
+    # Build the tags string – each label wrapped in a <span>
+    safe_labels = ''.join(
+        f'<span class="tag">{html.escape(label, quote=True)}</span>'
+        for label in labels
+    )
+
+    # Populate the template with escaped values
+    return USER_POST_FORMAT.format(
+        author_id=safe_author_id,
+        post_heading=safe_heading,
+        content=safe_content,
+        labels=safe_labels
+    )
